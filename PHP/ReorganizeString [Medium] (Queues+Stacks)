@@ -1,0 +1,50 @@
+// https://leetcode.com/submissions/detail/553767660/
+
+class Solution {
+
+    function reorganizeString($S) 
+    {
+        // Convert to array, then create array of occurrence
+        $array_of_chars = str_split($S);
+        $array_with_occurrences = array_count_values($array_of_chars); // [letter] => Occurrence
+        
+        $priority_queue = new SplPriorityQueue();
+        
+        // Sets the queue to return both key and value
+        $priority_queue->setExtractFlags(SplPriorityQueue::EXTR_BOTH);
+        
+        // Insert the chars, occurrence is set as the priority
+        foreach($array_with_occurrences as $char => $count)
+        {
+            $priority_queue->insert($char, $count);
+        }
+        
+        unset($array_with_occurrences);
+        $final_string = "";
+        $pending_insert = new SplStack();
+        
+        // We insert the most frequent characters (higher occurrence/priority)
+        // The stack helps us avoid inserting a frequent character twice in a row
+        while(!$priority_queue->isEmpty()) 
+        {
+            $next = $priority_queue->extract();
+            
+            // Re-insert the letter into the queue (from the stack)
+            while(!$pending_insert->isEmpty())
+            {
+                $pending = $pending_insert->pop();
+                $priority_queue->insert($pending[0], $pending[1]);
+            }
+
+            $char = $next['data'];
+            $count = $next['priority'];
+            $final_string .= $char;
+            $count--;
+            
+            // If char still has occurrences, return it to the queue
+            if($count > 0) $pending_insert->push([$char, $count]);
+        }
+        
+        return $pending_insert->isEmpty() ? $final_string : "";
+    }
+}
