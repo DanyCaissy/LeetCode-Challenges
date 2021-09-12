@@ -1,0 +1,28 @@
+// https://leetcode.com/submissions/detail/553393191/
+
+class Solution {
+
+    /**
+     * @param String $paragraph
+     * @param String[] $banned
+     * @return String
+     */
+    function mostCommonWord($paragraph, $banned) 
+    {
+        $paragraph = strtolower(str_replace (['!',"'",',',';','.','?'], ' ', $paragraph));
+        
+        // Turn paragraph into word array, remove empty value, rank words per occurrence
+        $word_array = array_count_values(array_filter(explode(' ', $paragraph)));
+        
+        // Remove banned words
+        foreach ($banned as $banned_word)
+        {
+            if (isset ($word_array[$banned_word])) unset ($word_array[$banned_word]);
+        }
+        
+        // Get the index of the word with most repetitions
+        $indexes_of_highest_value = array_keys($word_array, max($word_array));
+        
+        return $indexes_of_highest_value[0];
+    }
+}
