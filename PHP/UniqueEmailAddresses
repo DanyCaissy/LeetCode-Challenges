@@ -1,0 +1,29 @@
+// https://leetcode.com/submissions/detail/553412843/
+
+class Solution {
+
+    /**
+     * @param String[] $emails
+     * @return Integer
+     */
+    function numUniqueEmails($emails) 
+    {
+        $unique_email_addresses = [];
+        
+        foreach ($emails as $email)
+        {
+            $two_part_email = explode ('@', $email);
+            
+            // Remove dots on the left part
+            $email_name = str_replace ('.', '', $two_part_email[0]);
+            
+            // Remove the + and everything after
+            $email_name = strtok($email_name, '+');
+            
+            $unique_email_addresses[$email_name . '@' . $two_part_email[1]] = 1;
+        }
+        
+        
+        return count($unique_email_addresses);
+    }
+}
