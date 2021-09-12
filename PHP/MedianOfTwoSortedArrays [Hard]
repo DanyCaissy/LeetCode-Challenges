@@ -1,0 +1,63 @@
+// https://leetcode.com/submissions/detail/553457688/
+// I did this without array_merge, which would have made the code much more concise
+
+class Solution {
+
+    /**
+     * @param Integer[] $nums1
+     * @param Integer[] $nums2
+     * @return Float
+     */
+    function findMedianSortedArrays($nums1, $nums2) 
+    {
+        $new_merged_array = [];
+        $number_of_values = count($nums1) + count($nums2);
+        $j_1 = 0;
+        $j_2 = 0;
+        
+        $median_count = round($number_of_values / 2, 0) - 1;
+        if ($number_of_values % 2) $odd = true; 
+        else 
+        {
+            $odd = false;
+            $median_count++;
+        }
+        
+        for ($i = 0; $i < $number_of_values; $i++)
+        {
+            if (!isset($nums1[$j_1]))
+            {
+                $new_merged_array[$i] = $nums2[$j_2];
+                $j_2++;
+            }
+            else if (!isset($nums2[$j_2]))
+            {
+                $new_merged_array[$i] = $nums1[$j_1];
+                $j_1++;
+            }
+            else if ($nums1[$j_1] > $nums2[$j_2])
+            {
+                $new_merged_array[$i] = $nums2[$j_2];
+                $j_2++;
+            }
+            else
+            {
+                $new_merged_array[$i] = $nums1[$j_1];
+                $j_1++;
+            }
+            
+            // We reached the median number
+            if ($i == $median_count)
+            {
+                if ($odd)
+                {
+                    return $new_merged_array[$i];
+                }
+                else
+                {
+                    return (($new_merged_array[$i] + $new_merged_array[$i-1]) / 2);
+                }
+            }    
+        }
+    }
+}
