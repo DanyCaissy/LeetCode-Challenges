@@ -1,0 +1,43 @@
+// https://leetcode.com/submissions/detail/553372340/
+
+class Solution {
+
+    /**
+     * @param String[] $ops
+     * @return Integer
+     */
+    function calPoints($ops) 
+    {
+        $operation_array = [];
+        $current_index = 0;
+        
+        foreach ($ops as $key => $operation)
+        {
+            if ($operation === "C")
+            {
+                // Ensure it doesn't affect the score if it doesn't get replaced
+                $operation_array[$current_index-1] = 0; 
+                $current_index--; // Reverse the index by 1, so it'll get replaced next iteration
+                continue; // Continue to avoid the ++
+            }
+            else if ($operation === "D")
+            {
+                $operation_array[$current_index] = $operation_array[$current_index-1] * 2; // Add last element * 2
+            }
+            else if ($operation === "+")
+            {
+                // Add the last 2 elements
+                $operation_array[$current_index] = $operation_array[$current_index-1] + $operation_array[$current_index-2];
+            }
+            else
+            {
+                $operation_array[$current_index] = $operation;
+            }
+            
+            $current_index++;
+            
+        }
+        
+        return array_sum($operation_array);
+    }
+}
