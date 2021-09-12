@@ -1,4 +1,4 @@
-// https://leetcode.com/submissions/detail/553372340/
+// https://leetcode.com/submissions/detail/553379089/
 
 class Solution {
 
@@ -8,36 +8,23 @@ class Solution {
      */
     function calPoints($ops) 
     {
-        $operation_array = [];
-        $current_index = 0;
+        $ops_len = count($ops);
         
-        foreach ($ops as $key => $operation)
+        $score = [];
+        
+        for($i = 0; $i < $ops_len; $i++)
         {
-            if ($operation === "C")
-            {
-                // Ensure it doesn't affect the score if it doesn't get replaced
-                $operation_array[$current_index-1] = 0; 
-                $current_index--; // Reverse the index by 1, so it'll get replaced next iteration
-                continue; // Continue to avoid the ++
+            if($ops[$i] == "D"){
+                $score[] = $score[count($score)-1] * 2;
+            } else if ($ops[$i] == "+"){
+                $score[] = $score[count($score)-1] + $score[count($score)-2];
+            } else if ($ops[$i] == "C"){ // Remove element and rearranges indexes
+                array_splice($score, count($score) - 1, 1);
+            } else {
+                $score[] = $ops[$i];
             }
-            else if ($operation === "D")
-            {
-                $operation_array[$current_index] = $operation_array[$current_index-1] * 2; // Add last element * 2
-            }
-            else if ($operation === "+")
-            {
-                // Add the last 2 elements
-                $operation_array[$current_index] = $operation_array[$current_index-1] + $operation_array[$current_index-2];
-            }
-            else
-            {
-                $operation_array[$current_index] = $operation;
-            }
-            
-            $current_index++;
-            
         }
         
-        return array_sum($operation_array);
+        return array_sum($score);
     }
 }
