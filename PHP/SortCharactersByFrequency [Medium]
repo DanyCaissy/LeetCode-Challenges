@@ -1,0 +1,32 @@
+// https://leetcode.com/submissions/detail/553605596/
+
+class Solution {
+
+    /**
+     * @param String $s
+     * @return String
+     */
+    function frequencySort($s) {
+        
+        $new_string = "";
+        $character_array = [];
+        
+        // Basically rewrote array_count_values :))))
+        for ($i = 0; $i < strlen($s); $i++)
+        {
+            $character_array[$s[$i]] = isset($character_array[$s[$i]]) ? $character_array[$s[$i]] + 1 : 1;
+        }
+        
+        // Sort array whilst preserving keys
+        uasort($character_array, function($a, $b) {
+            return $b - $a;
+        });
+        
+        foreach ($character_array as $character => $count)
+        {
+            $new_string .= str_repeat($character, $count);
+        }
+        
+        return $new_string;
+    }
+}
