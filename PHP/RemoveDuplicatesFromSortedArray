@@ -1,0 +1,28 @@
+// https://leetcode.com/submissions/detail/557725316/?from=explore&item_id=727
+
+class Solution {
+
+    /**
+     * @param Integer[] $nums
+     * @return Integer
+     */
+    function removeDuplicates(&$nums) {
+        
+        $last_unique_value = $nums[0];
+        $last_unique_i = 0;
+        
+        // Start as one as the first value of the array will always stay
+        for ($i = 1; $i < count($nums); $i++)
+        {
+            // If we find a new unique value, add it to the next position
+            if ($nums[$i] !== $last_unique_value)
+            {
+                $last_unique_value = $nums[$i];
+                $nums[$last_unique_i+1] = $nums[$i];
+                $last_unique_i++;         
+            }
+        }
+        
+        return $last_unique_i + 1;
+    }
+}
