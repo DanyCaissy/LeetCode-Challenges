@@ -1,0 +1,24 @@
+// https://leetcode.com/submissions/detail/557787304/?from=explore&item_id=564
+
+class Solution {
+
+    /**
+     * @param Integer[] $prices
+     * @return Integer
+     */
+    function maxProfit($prices) 
+    {
+        $profit = 0;
+        $current_bought_value = $prices[0];
+        
+        for ($i = 1; $i < count($prices); $i++)
+        {
+            // If the price is increased from the last smaller number, add to profit
+            if ($prices[$i] > $current_bought_value) $profit += $prices[$i] - $current_bought_value;
+            
+            $current_bought_value = $prices[$i];
+        }
+        
+        return $profit;
+    }
+}
