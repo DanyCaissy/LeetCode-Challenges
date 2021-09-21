@@ -1,0 +1,20 @@
+// https://leetcode.com/submissions/detail/558385237/?from=explore&item_id=549
+
+class Solution {
+
+    /**
+     * @param Integer[] $nums
+     * @return Integer
+     */
+    function singleNumber($nums) 
+    {
+        // Get an array that counts occurrence of each value
+        $counted_values = array_count_values($nums);
+        
+        // Sort it while preserving the keys
+        asort($counted_values);
+        
+        // Return the index of the first array element (the one with 1 occurrence)
+        return key($counted_values);
+    }
+}
