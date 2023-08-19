@@ -1,0 +1,21 @@
+// https://leetcode.com/problems/length-of-last-word/solutions/3933312/php-simple-iterative-solution/
+
+class Solution {
+
+    /**
+     * @param String $s
+     * @return Integer
+     */
+    function lengthOfLastWord($s) {
+
+        $s = trim ($s);
+        $char_count = strlen($s);
+
+        for ($i = $char_count -1; $i >= 0; $i--)
+        {
+            if ($s[$i] == ' ') return ($char_count-1) - $i;
+        }
+
+        return trim($char_count); // To cover edge cases of a string with no spaces
+    }
+}
