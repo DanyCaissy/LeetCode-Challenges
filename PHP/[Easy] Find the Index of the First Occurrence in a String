@@ -1,0 +1,31 @@
+// https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/solutions/3933198/php-simple-solution/
+
+class Solution {
+
+    /**
+     * @param String $haystack
+     * @param String $needle
+     * @return Integer
+     */
+    function strStr($haystack, $needle) {
+        
+        $needleCount = strlen($needle);
+
+        for ($i = 0; $i < strlen($haystack); $i++)
+        {
+            if ($haystack[$i] == $needle[0])
+            {
+                $k = 1;
+                for ($j = $i+1; $k <= $needleCount; $j++)
+                {
+                    if (!isset($needle[$k])) return $i; // Went past the needle character limit, found all of them 
+
+                    if ($haystack[$j] == $needle[$k]) $k++;
+                    else break; // Abandon this occurence
+                }
+            }
+        }
+
+        return -1; // Didn't find it
+    }
+}
