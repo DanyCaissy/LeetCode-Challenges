@@ -1,0 +1,25 @@
+// https://leetcode.com/problems/reverse-integer/solutions/3933358/simple-php-solution/
+
+class Solution {
+
+    /**
+     * @param Integer $x
+     * @return Integer
+     */
+    function reverse($x) {
+        $strval = strval($x);
+        $minus = '';
+
+        if ($strval[0] == '-')
+        {
+            $minus = '-';
+            $strval = substr($strval, 1);
+        }
+
+        // Reverse and convert to int
+        $intval = intval(strrev($strval));
+
+        if ($intval > 2147483647) return 0;
+        else return intval($minus.$intval);
+    }
+}
